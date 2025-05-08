@@ -33,6 +33,14 @@
             <h2>留言區</h2>
             <div class="comment-input">
                 <textarea id="commentInput" placeholder="在這裡留下你的心情..."></textarea>
+                <div class="emoji-container">
+                    <button class="emoji-button" onclick="insertEmoji('💩')">💩</button>
+                    <button class="emoji-button" onclick="insertEmoji('😊')">😊</button>
+                    <button class="emoji-button" onclick="insertEmoji('😂')">😂</button>
+                    <button class="emoji-button" onclick="insertEmoji('🤣')">🤣</button>
+                    <button class="emoji-button" onclick="insertEmoji('😅')">😅</button>
+                    <button class="emoji-button" onclick="insertEmoji('🤔')">🤔</button>
+                </div>
                 <button id="postComment">發布留言</button>
             </div>
             <div id="commentsList" class="comments-list">
