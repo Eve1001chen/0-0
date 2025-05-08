@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吐槽大師</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 GUN.js -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/lib/webrtc.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>吐槽大師</h1>
+        <div class="hint-box">
+            和吐槽大師聊聊你的廢廢生活～
+            <div class="keywords">
+                生活相關：累、睡、餓、無聊、追劇、玩、宅、懶<br>
+                學生日常：掛科、報告、翹課、課表、早八、點名、段考<br>
+                學習狀態：讀書、考試、背書、學習、失敗<br>
+                特殊關鍵：廢、deadline、摸魚、抽選、期中
+            </div>
+        </div>
+        <div class="chat-container">
+            <div id="messages" class="messages"></div>
+            <div class="input-container">
+                <input type="text" id="message" placeholder="說說你的頹廢生活..." />
+                <button id="send">發送</button>
+            </div>
+        </div>
+        <div class="comment-section">
+            <h2>留言區</h2>
+            <div class="comment-input">
+                <textarea id="commentInput" placeholder="在這裡留下你的心情..."></textarea>
+                <button id="postComment">發布留言</button>
+            </div>
+            <div id="commentsList" class="comments-list">
+                <!-- 留言會被動態添加到這裡 -->
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
