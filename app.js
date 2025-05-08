@@ -446,6 +446,76 @@ document.addEventListener('DOMContentLoaded', () => {
     // 自動聚焦到訊息輸入框
     messageInput.focus();
 
+    // 留言區相關
+    const commentInput = document.getElementById('commentInput');
+    const postCommentButton = document.getElementById('postComment');
+    const commentsList = document.getElementById('commentsList');
+    const commentsRef = gun.get('comments');
+
+    // 特別針對留言的吐槽回應
+    const commentResponses = [
+        '哎呀～又在抒發內心戲啊？',
+        '這種心情我懂，但你可能比我更廢一點～',
+        '寫得真好！就是有點太消極了呢～',
+        '要不要考慮轉行當作家？至少可以把頹廢變成文學！',
+        '這麼會寫？不如去投稿「廢文月刊」吧！',
+        '越看越有感覺，感覺你真的很廢呢！',
+        '文采不錯～就是內容有點太真實了！',
+        '這種程度的自暴自棄，你很有天份喔！'
+    ];
+
+    // 發布留言
+    function postComment() {
+        const text = commentInput.value.trim();
+        if (text) {
+            const comment = {
+                text,
+                timestamp: Date.now(),
+                id: Math.random().toString(36).substring(2)
+            };
+
+            // 隨機選擇一個吐槽回應
+            const response = commentResponses[Math.floor(Math.random() * commentResponses.length)];
+            comment.response = response;
+
+            commentsRef.get(comment.id).put(comment);
+            commentInput.value = '';
+        }
+    }
+
+    // 顯示留言
+    function displayComment(comment) {
+        const commentEl = document.createElement('div');
+        commentEl.className = 'comment-item';
+        
+        commentEl.innerHTML = `
+            <div class="comment-text">${escapeHtml(comment.text)}</div>
+            <div class="comment-response">${escapeHtml(comment.response)}</div>
+            <div class="comment-time">${formatTime(comment.timestamp)}</div>
+        `;
+
+        commentsList.insertBefore(commentEl, commentsList.firstChild);
+    }
+
+    // 監聽留言
+    commentsRef.map().on((comment, id) => {
+        if (comment && !displayedMessages.has(id)) {
+            displayedMessages.add(id);
+            displayComment(comment);
+        }
+    });
+
+    // 留言按鈕事件
+    postCommentButton.addEventListener('click', postComment);
+    
+    // 留言輸入框按 Enter 發送
+    commentInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            postComment();
+        }
+    });
+
     // 設置預設主題
     setCurrentTopic('早餐');
 });
