@@ -452,19 +452,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentsList = document.getElementById('commentsList');
     const commentsRef = gun.get('comments');
 
-    // 特別針對留言的吐槽回應
-    const commentResponses = [
-        '哎呀～又在抒發內心戲啊？',
-        '這種心情我懂，但你可能比我更廢一點～',
-        '寫得真好！就是有點太消極了呢～',
-        '要不要考慮轉行當作家？至少可以把頹廢變成文學！',
-        '這麼會寫？不如去投稿「廢文月刊」吧！',
-        '越看越有感覺，感覺你真的很廢呢！',
-        '文采不錯～就是內容有點太真實了！',
-        '這種程度的自暴自棄，你很有天份喔！'
-    ];
+    // 插入表情符號到留言輸入框
+    function insertEmoji(emoji) {
+        const textarea = document.getElementById('commentInput');
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = textarea.value;
+        const before = text.substring(0, start);
+        const after = text.substring(end);
+        textarea.value = before + emoji + after;
+        textarea.focus();
+        // 將光標移到表情符號後面
+        const newCursor = start + emoji.length;
+        textarea.setSelectionRange(newCursor, newCursor);
+    }
 
-    // 發布留言
+    // 更新留言相關功能
     function postComment() {
         const text = commentInput.value.trim();
         if (text) {
@@ -474,8 +477,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: Math.random().toString(36).substring(2)
             };
 
-            // 隨機選擇一個吐槽回應
-            const response = commentResponses[Math.floor(Math.random() * commentResponses.length)];
+            // 隨機選擇一個吐槽回應，並加入表情符號
+            const responses = [
+                '哎呀～又在抒發內心戲啊？🤔',
+                '這種心情我懂，但你可能比我更廢一點～😅',
+                '寫得真好！就是有點太消極了呢～💩',
+                '要不要考慮轉行當作家？至少可以把頹廢變成文學！😂',
+                '這麼會寫？不如去投稿「廢文月刊」吧！🤣',
+                '越看越有感覺，感覺你真的很廢呢！💩',
+                '文采不錯～就是內容有點太真實了！😅',
+                '這種程度的自暴自棄，你很有天份喔！🤔'
+            ];
+            
+            const response = responses[Math.floor(Math.random() * responses.length)];
             comment.response = response;
 
             commentsRef.get(comment.id).put(comment);
