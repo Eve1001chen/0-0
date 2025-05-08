@@ -452,20 +452,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentsList = document.getElementById('commentsList');
     const commentsRef = gun.get('comments');
 
-    // 插入表情符號到留言輸入框
-    function insertEmoji(emoji) {
-        const textarea = document.getElementById('commentInput');
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const text = textarea.value;
-        const before = text.substring(0, start);
-        const after = text.substring(end);
-        textarea.value = before + emoji + after;
-        textarea.focus();
-        // 將光標移到表情符號後面
-        const newCursor = start + emoji.length;
-        textarea.setSelectionRange(newCursor, newCursor);
-    }
+    // 添加表情符號插入功能
+    window.insertEmoji = function(emoji) {
+        const commentInput = document.getElementById('commentInput');
+        const start = commentInput.selectionStart;
+        const end = commentInput.selectionEnd;
+        const text = commentInput.value;
+        const beforeText = text.substring(0, start);
+        const afterText = text.substring(end);
+        
+        commentInput.value = beforeText + emoji + afterText;
+        commentInput.focus();
+        // 設置光標位置在表情符號後面
+        const newPosition = start + emoji.length;
+        commentInput.setSelectionRange(newPosition, newPosition);
+    };
 
     // 更新留言相關功能
     function postComment() {
@@ -502,8 +503,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const commentEl = document.createElement('div');
         commentEl.className = 'comment-item';
         
+        const formattedText = escapeHtml(comment.text)
+            .replace(/\n/g, '<br>')
+            .replace(/ /g, '&nbsp;');
+        
         commentEl.innerHTML = `
-            <div class="comment-text">${escapeHtml(comment.text)}</div>
+            <div class="comment-text">${formattedText}</div>
             <div class="comment-response">${escapeHtml(comment.response)}</div>
             <div class="comment-time">${formatTime(comment.timestamp)}</div>
         `;

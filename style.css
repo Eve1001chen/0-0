@@ -166,25 +166,26 @@ button:hover {
 
 .emoji-container {
     display: flex;
-    gap: 5px;
-    margin-right: 10px;
+    gap: 8px;
+    margin: 10px 0;
     flex-wrap: wrap;
-    max-width: 200px;
 }
 
 .emoji-button {
-    padding: 5px;
-    background: transparent;
-    border: none;
+    padding: 8px 12px;
+    background: #363636;
+    color: #e4e6eb;
+    border: 1px solid #404040;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1.2em;
-    border-radius: 4px;
-    transition: transform 0.1s;
+    transition: all 0.2s;
+    font-family: monospace;
+    font-size: 14px;
 }
 
 .emoji-button:hover {
-    transform: scale(1.2);
     background: #404040;
+    transform: translateY(-2px);
 }
 
 /* 聊天機器人的特殊樣式 */
@@ -367,8 +368,11 @@ button:hover {
 }
 
 .comment-item .comment-text {
+    font-family: "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
     margin-bottom: 10px;
-    line-height: 1.4;
 }
 
 .comment-item .comment-response {
